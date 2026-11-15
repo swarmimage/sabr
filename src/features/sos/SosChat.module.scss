@@ -1,0 +1,88 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1.5px solid var(--green);
+  border-radius: var(--radius-card);
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.bubble {
+  align-self: flex-start;
+  max-width: 86%;
+  padding: 10px 14px;
+  border-radius: 18px 18px 18px 4px;
+  background: rgba(15, 77, 60, 0.09);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.mine {
+  align-self: flex-end;
+  border-radius: 18px 18px 4px 18px;
+  background: var(--green);
+  color: var(--white);
+}
+
+.quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  button {
+    min-height: 44px;
+    padding: 0 16px;
+    border: 1.5px solid var(--green);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--green);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  button:first-child {
+    background: var(--yellow);
+  }
+}
+
+.form {
+  display: flex;
+  gap: 8px;
+
+  input {
+    flex: 1;
+    min-width: 0;
+    height: 52px;
+    padding: 0 18px;
+    border: 1.5px solid var(--green);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--green);
+    font: inherit;
+  }
+
+  input::placeholder {
+    color: var(--muted-d);
+  }
+
+  button {
+    flex: 0 0 52px;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 50%;
+    background: var(--green);
+    color: var(--yellow);
+  }
+}

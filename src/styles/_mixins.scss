@@ -1,0 +1,22 @@
+$desktop: 900px;
+
+@mixin desktop {
+  @media (min-width: $desktop) {
+    @content;
+  }
+}
+
+@mixin display($weight: 500) {
+  font-family: var(--f-display);
+  font-weight: $weight;
+  text-transform: uppercase;
+}
+
+@mixin pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border-radius: 999px;
+  text-decoration: none;
+}

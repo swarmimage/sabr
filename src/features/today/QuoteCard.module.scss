@@ -1,0 +1,12 @@
+@use "../../styles/mixins" as *;
+
+.quote p {
+  font-size: 19px;
+  line-height: 1.4;
+  font-weight: 600;
+  text-wrap: balance;
+
+  @include desktop {
+    font-size: 23px;
+  }
+}

@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Сабр
 
-## Getting Started
+Приложение для отказа от порнозависимости: таймер выдержки, SOS, дуа, чётки, самоанализ.
+Next.js 16 (App Router, TypeScript) + SCSS modules, local-first (IndexedDB), PWA, MongoDB.
 
-First, run the development server:
+## Запуск
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # подставь свои значения
+npm run dev                  # http://localhost:3000 → редирект на /ru
+npm run build && npm start   # production; сервис-воркер работает только здесь
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Без `MONGODB_URI` приложение работает полностью локально: аккаунты и ИИ скрыты,
+данные хранятся на устройстве.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Переменные окружения
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Переменная | Зачем |
+|---|---|
+| `MONGODB_URI` | аккаунты и синхронизация |
+| `APP_URL` | адрес сайта в ссылке восстановления пароля |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM` | письма восстановления пароля (nodemailer) |
+| `ANTHROPIC_API_KEY` | разговор в SOS и разбор недели |
+| `ANTHROPIC_MODEL` | модель Claude (по умолчанию `claude-haiku-5-5`) |
 
-## Learn More
+## Структура
 
-To learn more about Next.js, take a look at the following resources:
+- `src/app/[locale]/(app)` — экраны с шапкой, нижним меню и кнопкой SOS
+- `src/app/[locale]/(bare)` — экраны без меню: SOS, вход, регистрация
+- `src/app/api` — route handlers: `auth/*`, `account`, `state`, `ai/*`
+- `src/server` — MongoDB, модели, сессии, отправка почты, Claude API
+- `src/components` — общие компоненты
+- `src/features` — логика экранов
+- `src/lib/store` — локальное хранилище (IndexedDB), `src/lib/sync.ts` — синхронизация с аккаунтом
+- `src/content` — цитаты, дуа, зикры, мифы, истории, практики (`ru.ts`, `uz.ts`)
+- `src/i18n` — словари интерфейса `ru` и `uz`
+- `public/sw.js` — сервис-воркер
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Как устроены данные
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Состояние пользователя — один объект (`AppState`). Интерфейс всегда читает и пишет его локально,
+поэтому всё работает без сети и без входа. После входа копия уходит на сервер (`PUT /api/state`);
+при расхождении побеждает версия с более поздним `updatedAt`.
 
-## Deploy on Vercel
+## Что сделано
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. ✅ Каркас: маршруты, layout, токены, шрифты, два языка
+2. ✅ Локальное хранилище
+3. ✅ Сегодня, SOS, Дуа, Чётки, Знания
+4. ✅ Итог дня, карта триггеров, план «если — то», письмо себе, опасное время
+5. ✅ PWA: манифест, иконки, сервис-воркер
+6. ✅ Бэкенд: регистрация, вход, сессии, восстановление пароля
+7. ✅ Синхронизация и профиль
+8. ✅ ИИ: разговор в SOS и разбор недели
+9. ⏳ Выпуск — см. ниже
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Перед выпуском
+
+- **Проверить с настоящей MongoDB.** Код бэкенда собран и типизирован, но не запускался с базой:
+  пройди регистрацию, вход, выход, смену пароля, синхронизацию между двумя браузерами, удаление аккаунта.
+- **Проверить почту:** задать `SMTP_*` и `MAIL_FROM`, запросить «Забыл пароль» и убедиться, что письмо приходит и ссылка открывает форму нового пароля. Без `SMTP_HOST` ссылка печатается в консоль сервера в dev.
+- **Проверить ИИ** с настоящим ключом и актуальным именем модели.
+- **Проверить офлайн** в production-сборке: открыть сайт, отключить сеть, пройти по экранам.
+- **Лимиты запросов** хранятся в памяти процесса: при нескольких инстансах нужен общий стор (Redis).
+- **Узбекский:** интерфейс и контент (`src/content/uz.ts`) переведены начерно. Нужна вычитка носителем языка и знающим человеком: там смыслы аятов и хадисов.
+- **Аяты, хадисы, дуа** записаны как передача смысла: сверить арабский текст и ссылки с источниками.
+- Раздать сайт только по HTTPS: cookie сессии в production помечена `Secure`.

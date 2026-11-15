@@ -1,0 +1,287 @@
+@use "mixins" as *;
+
+/* Общие кирпичики макета. Импорт: import ui from "@/styles/ui.module.scss" */
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.spread {
+  justify-content: space-between;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 13px;
+}
+
+.lead {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.src {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.lab {
+  @include display(500);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.tag {
+  @include display(500);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+.tagAccent {
+  font-weight: 800;
+  color: var(--yellow);
+}
+
+.h2 {
+  @include display(300);
+  font-size: 16px;
+
+  b {
+    font-weight: 800;
+    color: var(--yellow);
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+/* Светлая поверхность: карточка или целый экран (SOS) */
+.light {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--green);
+
+  .muted,
+  .src,
+  .lead,
+  .tag,
+  .eyebrow {
+    color: var(--muted-d);
+  }
+
+  .h2 b {
+    color: var(--green);
+  }
+
+  .btn {
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .btnSolid {
+    background: var(--green);
+    color: var(--yellow);
+  }
+
+  .link {
+    color: var(--muted-d);
+  }
+
+  .hr {
+    background: rgba(15, 77, 60, 0.2);
+  }
+
+  .translit {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  :focus-visible {
+    outline-color: var(--green);
+  }
+}
+
+.chip {
+  @include display(800);
+  align-self: flex-start;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--yellow);
+  color: var(--deep);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
+.hr {
+  height: 1px;
+  background: var(--line);
+}
+
+.btn {
+  @include pill;
+  @include display(500);
+  padding: 0 20px;
+  border: 1.5px solid var(--white);
+  background: transparent;
+  color: var(--white);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.btnPrimary {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: var(--deep);
+  font-weight: 800;
+}
+
+.btnSolid {
+  font-weight: 800;
+}
+
+.btnBig {
+  min-height: 56px;
+  font-size: 13px;
+}
+
+.link {
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.input {
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 14px;
+  border: 1.5px solid rgba(248, 246, 239, 0.5);
+  border-radius: 16px;
+  background: rgba(10, 58, 45, 0.6);
+  color: var(--white);
+  font: inherit;
+
+  &::placeholder {
+    color: var(--muted);
+    opacity: 0.8;
+  }
+}
+
+.bar {
+  height: 6px;
+  border-radius: 99px;
+  background: rgba(248, 246, 239, 0.14);
+  overflow: hidden;
+
+  i {
+    display: block;
+    height: 100%;
+    border-radius: 99px;
+    background: var(--yellow);
+  }
+}
+
+.barThin {
+  height: 3px;
+  background: rgba(15, 77, 60, 0.15);
+
+  i {
+    background: var(--green);
+  }
+}
+
+.ar {
+  font-family: var(--f-ar);
+  direction: rtl;
+  text-align: right;
+  font-size: 25px;
+  line-height: 2;
+}
+
+.translit {
+  font-style: italic;
+  color: var(--yellow);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow-wrap: anywhere;
+  }
+}
+
+.light .list li {
+  border-color: rgba(15, 77, 60, 0.3);
+}
+
+.num {
+  @include display(800);
+  flex: 0 0 auto;
+  padding-top: 3px;
+  color: var(--yellow);
+  font-size: 12px;
+}
+
+.light .num {
+  color: var(--green);
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

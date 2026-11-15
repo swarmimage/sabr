@@ -1,0 +1,18 @@
+@use "../styles/mixins" as *;
+
+.title {
+  @include display(300);
+  font-size: clamp(28px, 8.6vw, 34px);
+  line-height: 1.05;
+  text-wrap: balance;
+
+  b {
+    display: block;
+    font-weight: 800;
+    color: var(--yellow);
+  }
+
+  @include desktop {
+    font-size: 44px;
+  }
+}

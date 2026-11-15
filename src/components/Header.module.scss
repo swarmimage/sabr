@@ -1,0 +1,117 @@
+@use "../styles/mixins" as *;
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 0 8px;
+
+  @include desktop {
+    gap: 20px;
+    padding: 32px 0 16px;
+  }
+}
+
+.logo {
+  @include display(800);
+  font-style: italic;
+  font-size: 20px;
+  letter-spacing: 0;
+}
+
+.name {
+  @include display(500);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+}
+
+.rule {
+  flex: 1;
+  height: 1px;
+  background: rgba(248, 246, 239, 0.35);
+}
+
+.avatar {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--yellow);
+  color: var(--deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include desktop {
+    flex-basis: 50px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* Телефон: SOS и меню закреплены снизу. Широкий экран: переезжают в шапку. */
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 28px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(rgba(10, 58, 45, 0), var(--deep) 34%);
+
+  > * {
+    width: 100%;
+    max-width: 488px;
+    margin: 0 auto;
+  }
+
+  @include desktop {
+    position: static;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 16px;
+    padding: 0;
+    background: none;
+
+    > * {
+      width: auto;
+      max-width: none;
+      margin: 0;
+    }
+  }
+}
+
+.sos {
+  @include display(800);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 58px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: var(--yellow);
+  color: var(--deep);
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+
+  small {
+    font-family: var(--f-body);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  @include desktop {
+    height: 50px;
+    font-size: 15px;
+
+    small {
+      display: none;
+    }
+  }
+}

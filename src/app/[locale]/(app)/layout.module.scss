@@ -1,0 +1,23 @@
+@use "../../../styles/mixins" as *;
+
+.app {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 var(--gutter) 190px;
+
+  @include desktop {
+    max-width: 1160px;
+    padding: 0 48px 60px;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 14px;
+
+  @include desktop {
+    padding-top: 28px;
+  }
+}

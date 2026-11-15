@@ -1,0 +1,41 @@
+@use "../../../../styles/mixins" as *;
+
+.myth {
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: line-through;
+  text-decoration-color: var(--yellow);
+  text-decoration-thickness: 2px;
+}
+
+.storyTitle {
+  @include display(800);
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.lesson {
+  padding-left: 12px;
+  border-left: 3px solid var(--yellow);
+  font-weight: 600;
+}
+
+.practice {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 14px;
+
+  h2 {
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.number {
+  @include display(800);
+  flex: 0 0 38px;
+  font-size: 22px;
+  line-height: 1.1;
+  color: var(--yellow);
+}

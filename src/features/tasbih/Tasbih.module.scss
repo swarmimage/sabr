@@ -1,0 +1,99 @@
+@use "../../styles/mixins" as *;
+
+.title {
+  @include display(300);
+  font-size: clamp(28px, 8.6vw, 34px);
+  line-height: 1.05;
+
+  @include desktop {
+    font-size: 44px;
+  }
+}
+
+.total {
+  font-weight: 800;
+  color: var(--yellow);
+}
+
+.dhikrs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.pill {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1.5px solid rgba(248, 246, 239, 0.5);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 600;
+
+  &[aria-pressed="true"] {
+    background: var(--yellow);
+    border-color: var(--yellow);
+    color: var(--deep);
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.ar {
+  font-family: var(--f-ar);
+  direction: rtl;
+  font-size: 40px;
+  line-height: 1.7;
+}
+
+.bead {
+  align-self: center;
+  width: min(66vw, 250px);
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0;
+  border: 2px solid var(--yellow);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #1c6e57 0%, var(--green) 60%, var(--deep) 100%);
+  box-shadow: 0 0 0 10px rgba(255, 210, 63, 0.08);
+  color: var(--white);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  b {
+    @include display(800);
+    font-size: 76px;
+    line-height: 1;
+    color: var(--yellow);
+    font-variant-numeric: tabular-nums;
+  }
+
+  span {
+    @include display(500);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+  }
+}

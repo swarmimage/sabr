@@ -1,0 +1,129 @@
+@use "../../styles/mixins" as *;
+
+.loading {
+  min-height: 320px;
+}
+
+.heat {
+  display: grid;
+  grid-template-columns: 76px repeat(7, minmax(0, 1fr));
+  gap: 5px;
+  align-items: center;
+}
+
+.axis {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(248, 246, 239, 0.1);
+  color: var(--deep);
+  font-size: 11px;
+  font-weight: 700;
+
+  &[data-level="1"] {
+    background: rgba(255, 210, 63, 0.35);
+    color: var(--white);
+  }
+
+  &[data-level="2"] {
+    background: rgba(255, 210, 63, 0.65);
+  }
+
+  &[data-level="3"] {
+    background: var(--yellow);
+  }
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+
+  i {
+    width: 18px;
+    height: 10px;
+    border-radius: 3px;
+    background: rgba(248, 246, 239, 0.1);
+  }
+
+  i[data-level="1"] {
+    background: rgba(255, 210, 63, 0.35);
+  }
+
+  i[data-level="2"] {
+    background: rgba(255, 210, 63, 0.65);
+  }
+
+  i[data-level="3"] {
+    background: var(--yellow);
+  }
+}
+
+.suggest {
+  align-self: flex-start;
+  padding: 8px 18px;
+  font-family: var(--f-body);
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
+  text-align: left;
+}
+
+.trigger {
+  display: grid;
+  grid-template-columns: minmax(0, 130px) 1fr 28px;
+  gap: 10px;
+  align-items: center;
+  font-size: 14px;
+
+  b {
+    @include display(800);
+    font-size: 13px;
+    text-align: right;
+  }
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+
+  > div {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 2px;
+    padding: 14px 0;
+  }
+
+  > div + div {
+    padding-left: 14px;
+    border-left: 1px solid var(--line);
+  }
+
+  dt {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  dd {
+    @include display(800);
+    margin: 0;
+    font-size: 20px;
+    text-transform: none;
+  }
+}
+
+.accent {
+  color: var(--yellow);
+}

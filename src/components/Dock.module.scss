@@ -1,0 +1,33 @@
+@use "../styles/mixins" as *;
+
+.dock {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  padding: 5px;
+  border-radius: 999px;
+  background: var(--deep);
+  border: 1px solid rgba(248, 246, 239, 0.16);
+
+  a {
+    @include pill;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  a[aria-current="page"] {
+    background: var(--white);
+    color: var(--deep);
+  }
+
+  @include desktop {
+    display: flex;
+    gap: 4px;
+
+    a {
+      min-height: 40px;
+      padding: 0 18px;
+      font-size: 14px;
+    }
+  }
+}
