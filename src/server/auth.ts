@@ -17,7 +17,9 @@ const scrypt = promisify(scryptCb) as (
 ) => Promise<Buffer>;
 
 const COOKIE = "sabr_session";
-const SESSION_DAYS = 30;
+// Сессия скользящая: каждый заход продлевает её, так что активного пользователя не выкидывает.
+const SESSION_DAYS = 365;
+const DAY_MS = 86_400_000;
 
 export const sha256 = (value: string) =>
   createHash("sha256").update(value).digest("hex");
@@ -52,14 +54,18 @@ export const cleanName = (value: unknown) =>
 
 export async function createSession(userId: UserDoc["_id"]) {
   const token = newToken();
-  const expiresAt = new Date(Date.now() + SESSION_DAYS * 86_400_000);
+  const expiresAt = new Date(Date.now() + SESSION_DAYS * DAY_MS);
   await Session.create({ tokenHash: sha256(token), userId, expiresAt });
+  await setCookie(token, expiresAt);
+}
+
+async function setCookie(token: string, expires: Date) {
   (await cookies()).set(COOKIE, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
-    expires: expiresAt,
+    expires,
   });
 }
 
@@ -84,6 +90,12 @@ export async function currentUser(): Promise<UserDoc | null> {
     expiresAt: { $gt: new Date() },
   }).lean();
   if (!session) return null;
+  // Продлеваем не чаще раза в сутки, чтобы не писать в базу на каждый запрос.
+  if (session.expiresAt.getTime() - Date.now() < (SESSION_DAYS - 1) * DAY_MS) {
+    const expiresAt = new Date(Date.now() + SESSION_DAYS * DAY_MS);
+    await Session.updateOne({ _id: session._id }, { expiresAt });
+    await setCookie(token, expiresAt).catch(() => {});
+  }
   return User.findById(session.userId).lean<UserDoc>();
 }
 

@@ -36,8 +36,31 @@ let state = initial;
 let loading: Promise<void> | null = null;
 const listeners = new Set<() => void>();
 
+/* Последний известный пользователь хранится на устройстве: без сети или при сбое сервера
+   профиль остаётся открытым. Выходит человек только сам или когда сервер прямо сказал «сессии нет». */
+const CACHE_KEY = "sabr:user";
+
+function cachedUser(): User | null {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    return raw ? (JSON.parse(raw) as User) : null;
+  } catch {
+    return null;
+  }
+}
+
+function cacheUser(user: User | null) {
+  try {
+    if (user) localStorage.setItem(CACHE_KEY, JSON.stringify(user));
+    else localStorage.removeItem(CACHE_KEY);
+  } catch {
+    // хранилище недоступно: не страшно
+  }
+}
+
 function set(next: AuthState) {
   state = next;
+  if (next.status !== "loading") cacheUser(next.user);
   listeners.forEach((l) => l());
 }
 
@@ -51,8 +74,16 @@ const fromMe = (me: Me): AuthState => ({
 function load() {
   loading ??= api<Me>("/api/auth/me")
     .then((me) => set(fromMe(me)))
-    // Нет сети: считаем гостем, приложение работает локально.
-    .catch(() => set({ ...initial, status: "guest" }));
+    // Нет сети или сбой сервера: остаёмся тем, кем были, а не выходим из профиля.
+    .catch(() => {
+      const user = cachedUser();
+      set({
+        ...initial,
+        status: user ? "user" : "guest",
+        user,
+        configured: true,
+      });
+    });
   return loading;
 }
 

@@ -1,3 +1,4 @@
+import { after } from "next/server";
 import { newToken, sha256, validEmail } from "@/server/auth";
 import { connect, isConfigured } from "@/server/db";
 import {
@@ -33,9 +34,12 @@ export async function POST(request: Request) {
       });
       const locale = body.locale === "uz" ? "uz" : "ru";
       const link = `${process.env.APP_URL ?? ""}/${locale}/login?reset=${token}`;
-      // Сбой почты не должен менять ответ: иначе по нему можно узнать, зарегистрирована ли почта.
-      await sendResetEmail(user.email, link, locale).catch((error) =>
-        console.error("[mail] send failed", error),
+      // Письмо уходит после ответа: SMTP медленный, а ожидание его по времени выдало бы,
+      // что такая почта зарегистрирована. Сбой почты тоже не меняет ответ.
+      after(() =>
+        sendResetEmail(user.email, link, locale).catch((error) =>
+          console.error("[mail] send failed", error),
+        ),
       );
     }
   }
