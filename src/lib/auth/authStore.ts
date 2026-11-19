@@ -7,6 +7,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  emailVerified: boolean;
   createdAt: number | null;
 }
 
@@ -114,16 +115,31 @@ export async function login(email: string, password: string) {
   );
 }
 
-export async function register(name: string, email: string, password: string) {
+export async function register(
+  name: string,
+  email: string,
+  password: string,
+  locale: string,
+) {
   signedIn(
     (
       await api<{ user: User }>("/api/auth/register", {
         method: "POST",
-        body: { name, email, password },
+        body: { name, email, password, locale },
       })
     ).user,
   );
 }
+
+/** Подтверждение почты по токену из письма. Если пользователь уже вошёл, обновляет его статус. */
+export async function verifyEmail(token: string) {
+  await api("/api/auth/verify", { method: "POST", body: { token } });
+  const me = await api<Me>("/api/auth/me").catch(() => null);
+  if (me) set(fromMe(me));
+}
+
+export const resendVerification = (locale: string) =>
+  api("/api/auth/verify/resend", { method: "POST", body: { locale } });
 
 export async function resetPassword(token: string, password: string) {
   signedIn(

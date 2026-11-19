@@ -6,7 +6,13 @@ import { usePathname, useRouter } from "next/navigation";
 import Icon from "@/components/Icon";
 import { locales, type Dict, type Locale } from "@/i18n/config";
 import { ApiError } from "@/lib/api";
-import { deleteAccount, logout, rename, useAuth } from "@/lib/auth/authStore";
+import {
+  deleteAccount,
+  logout,
+  rename,
+  resendVerification,
+  useAuth,
+} from "@/lib/auth/authStore";
 import { DAY, plural } from "@/lib/format";
 import { getState, resetState, setAi } from "@/lib/store/store";
 import { useStore, useStoreReady } from "@/lib/store/useStore";
@@ -65,6 +71,21 @@ export default function Profile({
   const [deleting, setDeleting] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [verifyNote, setVerifyNote] = useState("");
+
+  async function resend() {
+    setVerifyNote("");
+    try {
+      await resendVerification(locale);
+      setVerifyNote(dict.auth.verifySent);
+    } catch (e) {
+      const code = e instanceof ApiError ? e.code : "unknown";
+      setVerifyNote(
+        dict.auth.errors[code as keyof typeof dict.auth.errors] ??
+          dict.auth.errors.unknown,
+      );
+    }
+  }
 
   const user = auth.user;
   const days =
@@ -232,6 +253,19 @@ export default function Profile({
               {user.email.replace(/^(.).*(@.*)$/, "$1•••$2")}
             </span>
           </div>
+          {!user.emailVerified && (
+            <div className={styles.line}>
+              <span className={ui.muted}>{dict.auth.unverified}</span>
+              <button type="button" className={ui.link} onClick={resend}>
+                {dict.auth.verifyResend}
+              </button>
+            </div>
+          )}
+          {verifyNote && (
+            <span className={ui.src} role="status">
+              {verifyNote}
+            </span>
+          )}
         </section>
       )}
 

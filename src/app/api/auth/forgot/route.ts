@@ -23,6 +23,8 @@ export async function POST(request: Request) {
     await connect();
     const user = await User.findOne({
       email: body.email.toLowerCase().trim(),
+      // Письмо только на подтверждённый адрес: иначе ссылку получил бы случайный владелец почты.
+      emailVerified: true,
     }).lean();
     if (user) {
       const token = newToken();

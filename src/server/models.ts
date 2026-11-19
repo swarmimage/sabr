@@ -19,6 +19,7 @@ const userSchema = new Schema(
     },
     name: { type: String, required: true, trim: true, maxlength: 40 },
     passwordHash: { type: String, required: true },
+    emailVerified: { type: Boolean, default: false },
   },
   { timestamps: true },
 );
@@ -46,6 +47,19 @@ const resetSchema = new Schema({
   expiresAt: { type: Date, required: true, index: { expires: 0 } },
 });
 
+/** Подтверждение почты: токен привязан к адресу, после смены адреса старая ссылка не сработает. */
+const verifySchema = new Schema({
+  tokenHash: { type: String, required: true, unique: true },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+    index: true,
+  },
+  email: { type: String, required: true },
+  expiresAt: { type: Date, required: true, index: { expires: 0 } },
+});
+
 /** Копия локального состояния пользователя. Сервер его не разбирает, только хранит и отдаёт. */
 const stateSchema = new Schema({
   userId: {
@@ -68,4 +82,5 @@ const get = <T>(name: string, schema: Schema<T>) =>
 export const User = get("User", userSchema);
 export const Session = get("Session", sessionSchema);
 export const ResetToken = get("ResetToken", resetSchema);
+export const VerifyToken = get("VerifyToken", verifySchema);
 export const UserState = get("UserState", stateSchema);

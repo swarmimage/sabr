@@ -16,6 +16,7 @@ import {
   sameOrigin,
 } from "@/server/http";
 import { User, type UserDoc } from "@/server/models";
+import { queueVerification } from "@/server/verify";
 
 export async function POST(request: Request) {
   if (!isConfigured()) return fail("not_configured", 503);
@@ -43,5 +44,9 @@ export async function POST(request: Request) {
     passwordHash: await hashPassword(body.password),
   });
   await createSession(user._id);
+  // Вход сразу, без ожидания письма; подтверждение нужно для восстановления пароля.
+  await queueVerification(user, body.locale).catch((error) =>
+    console.error("[verify] queue failed", error),
+  );
   return json({ user: publicUser(user.toObject() as UserDoc) }, 201);
 }

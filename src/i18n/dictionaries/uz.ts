@@ -239,7 +239,11 @@ const uz: Dict = {
     signIn: "Kirish",
     forgot: "Parolni unutdim",
     forgotSent:
-      "Agar bu pochta ro‘yxatdan o‘tgan bo‘lsa, unga parolni almashtirish havolasi yuborildi.",
+      "Agar bu pochta ro‘yxatdan o‘tgan va tasdiqlangan bo‘lsa, unga parolni almashtirish havolasi yuborildi.",
+    unverified: "Pochta tasdiqlanmagan",
+    verifyResend: "Xat yuborish",
+    verifySent: "Xat yuborildi. Pochtani, jumladan «Spam»ni tekshir.",
+    verifyDone: "Pochta tasdiqlandi.",
     forgotNeedEmail: "Avval pochtani kirit.",
     resetTitle: "Yangi parol o‘rnat",
     resetSave: "Parolni saqlash",
@@ -255,6 +259,8 @@ const uz: Dict = {
       invalid_credentials: "Pochta yoki parol noto‘g‘ri.",
       invalid_token:
         "Havola eskirgan. «Parolni unutdim» orqali yangisini so‘ra.",
+      invalid_verify:
+        "Havola eskirgan yoki allaqachon ishlatilgan. Profilda yangi xat so‘ra.",
       rate_limited: "Urinishlar juda ko‘p. Biroz kutib, qayta urin.",
       not_configured: "Bu serverda akkauntlar hali ulanmagan.",
       network: "Server bilan aloqa yo‘q. Internetni tekshirib, qayta urin.",

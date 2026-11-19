@@ -32,38 +32,52 @@ const escapeHtml = (value: string) =>
       ]!,
   );
 
+type Kind = "reset" | "verify";
+type Lang = "ru" | "uz";
+
 // Тема и текст нейтральные: по письму нельзя понять, о чём приложение.
 const texts = {
   ru: {
-    subject: "Смена пароля",
-    intro: "Вы запросили смену пароля. Ссылка действует один час:",
-    button: "Задать новый пароль",
-    outro:
-      "Если это были не вы, просто проигнорируйте письмо: пароль останется прежним.",
+    reset: {
+      subject: "Смена пароля",
+      intro: "Вы запросили смену пароля. Ссылка действует один час:",
+      button: "Задать новый пароль",
+      outro:
+        "Если это были не вы, просто проигнорируйте письмо: пароль останется прежним.",
+    },
+    verify: {
+      subject: "Подтверждение почты",
+      intro: "Подтвердите адрес почты. Ссылка действует 24 часа:",
+      button: "Подтвердить почту",
+      outro: "Если это были не вы, просто проигнорируйте письмо.",
+    },
   },
   uz: {
-    subject: "Parolni almashtirish",
-    intro:
-      "Siz parolni almashtirishni so‘radingiz. Havola bir soat amal qiladi:",
-    button: "Yangi parol o‘rnatish",
-    outro:
-      "Agar bu siz bo‘lmasangiz, xatga e’tibor bermang: parol o‘zgarmaydi.",
+    reset: {
+      subject: "Parolni almashtirish",
+      intro:
+        "Siz parolni almashtirishni so‘radingiz. Havola bir soat amal qiladi:",
+      button: "Yangi parol o‘rnatish",
+      outro:
+        "Agar bu siz bo‘lmasangiz, xatga e’tibor bermang: parol o‘zgarmaydi.",
+    },
+    verify: {
+      subject: "Pochtani tasdiqlash",
+      intro: "Pochta manzilini tasdiqlang. Havola 24 soat amal qiladi:",
+      button: "Pochtani tasdiqlash",
+      outro: "Agar bu siz bo‘lmasangiz, xatga e’tibor bermang.",
+    },
   },
 };
 
-export async function sendResetEmail(
-  to: string,
-  link: string,
-  locale: "ru" | "uz" = "ru",
-) {
+async function sendLink(kind: Kind, to: string, link: string, locale: Lang) {
   if (!mailConfigured()) {
     if (process.env.NODE_ENV !== "production")
-      console.info(`[mail] reset link for ${to}: ${link}`);
-    else
-      console.warn("[mail] SMTP is not configured: reset email was not sent");
+      console.info(`[mail] ${kind} link for ${to}: ${link}`);
+    else console.warn(`[mail] SMTP is not configured: ${kind} email not sent`);
     return;
   }
-  const t = texts[locale];
+  const t = texts[locale][kind];
   const href = escapeHtml(link);
   await getTransporter().sendMail({
     from: process.env.MAIL_FROM || process.env.SMTP_USER,
@@ -78,3 +92,12 @@ export async function sendResetEmail(
 </div>`,
   });
 }
+
+export const sendResetEmail = (to: string, link: string, locale: Lang = "ru") =>
+  sendLink("reset", to, link, locale);
+
+export const sendVerifyEmail = (
+  to: string,
+  link: string,
+  locale: Lang = "ru",
+) => sendLink("verify", to, link, locale);

@@ -103,6 +103,7 @@ export const publicUser = (user: UserDoc) => ({
   id: String(user._id),
   name: user.name,
   email: user.email,
+  emailVerified: user.emailVerified === true,
   createdAt:
     (user as UserDoc & { createdAt?: Date }).createdAt?.getTime() ?? null,
 });
