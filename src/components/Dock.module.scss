@@ -20,14 +20,35 @@
     color: var(--deep);
   }
 
+  /* Веб (шапка «Приветствие»): без подложки, текущий раздел обведён жёлтым.
+     Профиль в вебе открывается аватаром, отдельная вкладка не нужна. */
   @include desktop {
     display: flex;
     gap: 4px;
+    padding: 0;
+    background: none;
+    border: 0;
 
     a {
-      min-height: 40px;
+      min-height: 44px;
       padding: 0 18px;
       font-size: 14px;
+      color: var(--white);
+      border: 1.5px solid transparent;
+    }
+
+    a:hover {
+      color: var(--yellow);
+    }
+
+    a[aria-current="page"] {
+      background: none;
+      color: var(--yellow);
+      border-color: var(--yellow);
+    }
+
+    a[data-tab="profile"] {
+      display: none;
     }
   }
 }

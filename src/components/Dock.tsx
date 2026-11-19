@@ -34,6 +34,7 @@ export default function Dock({
       {tabs.map((tab) => (
         <Link
           key={tab}
+          data-tab={tab}
           href={tab === "today" ? `/${locale}` : `/${locale}/${tab}`}
           aria-current={tab === current ? "page" : undefined}
         >

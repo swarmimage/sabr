@@ -328,6 +328,101 @@ const uz: Dict = {
     reviewBy: "AI",
     addRule: "Rejaga qo‘shish",
   },
+  greet: {
+    hello: "Assalomu alaykum",
+    guest: "Birodar",
+    streak: "Seriya:",
+    lang: "Til",
+  },
+  landing: {
+    nav: ["Qanday ishlaydi", "Imkoniyatlar", "Maxfiylik"],
+    login: "Kirish",
+    start: "Boshlash",
+    eyebrow: "Pornografiyaga qaramlikdan qutulish · islomiy yondashuv",
+    title: ["Nigohingni", "qaytar"],
+    lead: "Sabr taymeri, istak paytida SOS tugmasi, duolar, tasbeh va kechki muhosaba. Ro‘yxatdan o‘tmasdan, reklamasiz ishlaydi, ma’lumotlaringni faqat sen ko‘rasan.",
+    cta: "Hisobni boshlash",
+    haveAccount: "Menda akkaunt bor",
+    mock: {
+      label: "Pok vaqt",
+      thin: "Chidayapman",
+      bold: "12 kun",
+      milestone: "Marra: 14 kun",
+      tasbih: "SubhanAlloh",
+    },
+    ayahChip: "Oyat",
+    ayah: "«Mo‘min erkaklarga ayt, nigohlarini tiysinlar va farjlarini saqlasinlar. Bu ular uchun pokizaroqdir».",
+    ayahSrc: "ma’nosi, Qur’on 24:30",
+    howTitle: ["Bu qanday", "ishlaydi"],
+    steps: [
+      {
+        title: "Hisobni boshla",
+        text: "Bir bosish, ro‘yxatdan o‘tmasdan. Taymer har bir pok kun va soatni sanaydi.",
+      },
+      {
+        title: "Qiyin paytda SOS bos",
+        text: "O‘n daqiqa, nafas va yolg‘iz kurash o‘rniga o‘z rejang.",
+      },
+      {
+        title: "Kun yakunini chiqar",
+        text: "Kechqurun ikki daqiqa muhosaba. Bir haftada nima va qachon tortishi ko‘rinadi.",
+      },
+    ],
+    featuresTitle: ["Sabr qilishga", "yordam beradi"],
+    featuresLead:
+      "Motivatsion rasmlar emas, aniq lahza uchun vositalar: istak kelganda, uxlashdan oldin va kun oxirida.",
+    features: [
+      {
+        title: "10 daqiqalik SOS",
+        text: "Taymer, nafas, duo va hali qilmagan ishlaring ro‘yxati. Kirishsiz ochiladi.",
+      },
+      {
+        title: "Sabr taymeri",
+        text: "Kunlar, soatlar va 7, 30, 40, 90 kunlik marralar. Eng yaxshi seriya saqlanadi.",
+      },
+      {
+        title: "Duolar",
+        text: "Nafs va yomon odatlardan duolar: arabcha matn, o‘qilishi, ma’nosi va manbasi.",
+      },
+      {
+        title: "Tasbeh",
+        text: "SubhanAlloh, astag‘firulloh, salovat. Aylanali hisoblagich, har kuni yangilanadi.",
+      },
+      {
+        title: "Triggerlar xaritasi",
+        text: "Qaysi soat va kunlarda kuchliroq tortishi va bunga nima sabab bo‘lishi ko‘rinadi.",
+      },
+      {
+        title: "«Agar — unda» rejasi",
+        text: "Qiyin vaziyatlar uchun o‘z qoidalaring. SOSda ular birinchi turadi.",
+      },
+      {
+        title: "Xavfli vaqt",
+        text: "Xavfli soatlaringda ekran o‘zgaradi: bitta ko‘rsatma va uchta harakat.",
+      },
+      {
+        title: "AI yoningda",
+        text: "Istak paytida qisqa suhbat va yozuvlaring bo‘yicha haftalik tahlil.",
+      },
+    ],
+    privacyTitle: ["Hech kim", "bilmaydi"],
+    privacyLead:
+      "Mavzu shaxsiy. Shuning uchun ilova bu haqda sendan boshqa hech kim bilmasligi uchun qurilgan.",
+    privacy: [
+      "Akkauntsiz hammasi faqat qurilmangda saqlanadi.",
+      "Akkaunt uchun faqat pochta kerak, ism istalgancha bo‘lishi mumkin.",
+      "Xatlarda mavzu nomi yo‘q: faqat parolni almashtirish va pochtani tasdiqlash.",
+      "Yozuvlarni istalgan payt yuklab olish yoki o‘chirish mumkin.",
+    ],
+    finalTitle: ["Birinchi kun —", "bugun"],
+    finalQuote: "«Albatta, qiyinchilik bilan birga yengillik bor» (ma’nosi, Qur’on 94:5–6).",
+    register: "Seriyani yo‘qotmaslik uchun akkaunt yarat",
+    footerLogin: "Kirish",
+    footerRegister: "Ro‘yxatdan o‘tish",
+    footerSos: "Kirishsiz SOS",
+    disclaimer:
+      "Oyat va hadislar manbasi ko‘rsatilgan holda ma’no tarjimasi sifatida keltirilgan. Ilova shifokor va psixolog o‘rnini bosmaydi.",
+  },
   titles: {
     evening: ["Kun", "yakuni"],
     map: ["Triggerlar", "xaritasi"],
